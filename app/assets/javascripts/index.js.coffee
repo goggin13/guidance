@@ -12,6 +12,7 @@ jQuery ->
       chat_window.ready ->
         chat_window_view = new ChatWindowView(model: chat_window)
         ($ '#chat_window_container').html chat_window_view.render().el
+        ($ '#chat_window_container').fadeIn()
       
       chat_window.channel.bind "client-request", (data) ->
         console.log "request recieved", data

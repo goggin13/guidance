@@ -46,19 +46,14 @@ window.ChatUserRow = BaseView.extend
     console.log "request chat with data", data
     @options.channel.trigger "request", data
     apiKey = '1127'
-    console.log "session_id", data.session_id
     sessionId = data.session_id
     token = 'T1==cGFydG5lcl9pZD0xMTI3JnNpZz1hMzczM2JmOTJiODk2MTk1ZWE2MGFkNjY3YTJkYmYzMDY5MDVmMjQ2OnNlc3Npb25faWQ9MV9NWDR4TVRJM2ZuNVRZWFFnVG05MklERXdJREF3T2pBMU9qQTNJRkJUVkNBeU1ERXlmakF1T1RRNE5UY3dNMzQmY3JlYXRlX3RpbWU9MTM1MjUzNDcwNyZleHBpcmVfdGltZT0xMzUyNjIxMTA3JnJvbGU9cHVibGlzaGVyJm5vbmNlPTk4ODcxMw=='
 
     TB.setLogLevel(TB.DEBUG)
 
     session = TB.initSession(sessionId)
-    session.addEventListener 'sessionConnected', (data) ->
-      console.log "data sessionConnected", data
-      sessionConnectedHandler(data)
-    session.addEventListener 'streamCreated', (data) ->
-      console.log "data streamCreated", data
-      streamCreatedHandler(data)
+    session.addEventListener 'sessionConnected', (data) -> sessionConnectedHandler(data)
+    session.addEventListener 'streamCreated', (data) -> streamCreatedHandler(data)
     session.connect(apiKey, token)
 
     sessionConnectedHandler = (event) ->
@@ -80,7 +75,6 @@ window.ChatUserRow = BaseView.extend
         document.body.appendChild(div)
 
         subscribeProps = {height:240, width:320}
-        console.log "subscribe"
         session.subscribe(stream, div.id)
   
   render: ->
