@@ -11,11 +11,12 @@
     TB.setLogLevel(TB.DEBUG); // Set this for helpful debugging messages in console
 
      var session = TB.initSession(sessionId);			
-     session.addEventListener('sessionConnected', sessionConnectedHandler);			
+     session.addEventListener('sessionConnected', sessionConnectedHandler);	
+     session.addEventListener('streamCreated', streamCreatedHandler);		
      session.connect(apiKey, token);
 
      function sessionConnectedHandler(event) {
-       alert('Hello world. I am connected to OpenTok :).');
+       // alert('Hello world. I am connected to OpenTok :).');
        // Put my webcam in a div
        var publishProps = {height:240, width:320};
        publisher = TB.initPublisher(apiKey, 'myPublisherDiv', publishProps);
@@ -26,7 +27,7 @@
 
      function streamCreatedHandler(event) {
        // Subscribe to any new streams that are created
-       alert("created");
+       // alert("created");
        subscribeToStreams(event.streams);
        
      }
@@ -37,7 +38,7 @@
         if (streams[i].connection.connectionId == session.connection.connectionId) {
           return;
         }
-
+        // alert("subscribed");
         // Create the div to put the subscriber element in to
         var div = document.createElement('div');
         div.setAttribute('id', 'stream' + streams[i].streamId);
@@ -46,7 +47,7 @@
         // Subscribe to the stream
         var subscribeProps = {height:240, width:320};
         session.subscribe(streams[i], div.id);
-        alert("subscribed");
+        
       }
     }
   </script>
