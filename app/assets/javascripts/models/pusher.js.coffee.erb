@@ -13,6 +13,7 @@ window.PusherAPI = new (Backbone.Model.extend
     @api.connection.bind 'ready', f
 )()
 
+
 window.Channel = Backbone.Model.extend 
   
   initialize: (attrs) ->
@@ -21,3 +22,9 @@ window.Channel = Backbone.Model.extend
   bind: (event, f) -> @pusher_channel.bind event, f
   
   members: -> @pusher_channel.members
+  
+  trigger: (event, data) ->
+    event = "client-#{event}" # client prefix required for pusher
+    console.log "trigger", event, data
+    @pusher_channel.trigger event, data
+

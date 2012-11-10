@@ -21,7 +21,7 @@ window.ChatWindowView = BaseView.extend
   
   add_row_for_user: (user) ->
     @remove_row_for_user(user)
-    row = new ChatUserRow(model: user)
+    row = new ChatUserRow(model: user, channel: @model.channel)
     @rows.push row
     @$('ul').append row.render().el
     
@@ -38,7 +38,50 @@ window.ChatUserRow = BaseView.extend
     'click .video_chat_me': 'request_chat'
       
   request_chat: ->
-    console.log "request chat with #{@model.getName()}"  
+    data = 
+      user_id: @model.getId()
+      from: current_user.toJSON()
+      session_id: '1_MX4xMTI3fn5TYXQgTm92IDEwIDAwOjA1OjA3IFBTVCAyMDEyfjAuOTQ4NTcwM34'
+    
+    console.log "request chat with data", data
+    @options.channel.trigger "request", data
+    apiKey = '1127'
+    console.log "session_id", data.session_id
+    sessionId = data.session_id
+    token = 'T1==cGFydG5lcl9pZD0xMTI3JnNpZz1hMzczM2JmOTJiODk2MTk1ZWE2MGFkNjY3YTJkYmYzMDY5MDVmMjQ2OnNlc3Npb25faWQ9MV9NWDR4TVRJM2ZuNVRZWFFnVG05MklERXdJREF3T2pBMU9qQTNJRkJUVkNBeU1ERXlmakF1T1RRNE5UY3dNMzQmY3JlYXRlX3RpbWU9MTM1MjUzNDcwNyZleHBpcmVfdGltZT0xMzUyNjIxMTA3JnJvbGU9cHVibGlzaGVyJm5vbmNlPTk4ODcxMw=='
+
+    TB.setLogLevel(TB.DEBUG)
+
+    session = TB.initSession(sessionId)
+    session.addEventListener 'sessionConnected', (data) ->
+      console.log "data sessionConnected", data
+      sessionConnectedHandler(data)
+    session.addEventListener 'streamCreated', (data) ->
+      console.log "data streamCreated", data
+      streamCreatedHandler(data)
+    session.connect(apiKey, token)
+
+    sessionConnectedHandler = (event) ->
+      console.log "sessionConnectedHandler"
+      publishProps = {height:240, width:320}
+      publisher = TB.initPublisher(apiKey, 'myPublisherDiv', publishProps)
+      session.publish(publisher)
+      subscribeToStreams(event.streams)
+
+    streamCreatedHandler = (event) ->
+      console.log "streamCreatedHandler"
+      subscribeToStreams(event.streams)
+
+    subscribeToStreams = (streams) ->
+      _.each streams, (stream) ->
+        return if (stream.connection.connectionId == session.connection.connectionId)
+        div = document.createElement('div')
+        div.setAttribute('id', 'stream' + stream.streamId)
+        document.body.appendChild(div)
+
+        subscribeProps = {height:240, width:320}
+        console.log "subscribe"
+        session.subscribe(stream, div.id)
   
   render: ->
     @$el.html @template(@model.toJSON())
