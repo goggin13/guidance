@@ -59,7 +59,8 @@ window.ChatUserRow = BaseView.extend
     sessionConnectedHandler = (event) ->
       console.log "sessionConnectedHandler"
       publishProps = {height:240, width:320}
-      publisher = TB.initPublisher(apiKey, 'myPublisherDiv', publishProps)
+      $('#content').append("<div id='publisher_div'></div>")
+      publisher = TB.initPublisher(apiKey, 'publisher_div', publishProps)
       session.publish(publisher)
       subscribeToStreams(event.streams)
 
@@ -72,7 +73,7 @@ window.ChatUserRow = BaseView.extend
         return if (stream.connection.connectionId == session.connection.connectionId)
         div = document.createElement('div')
         div.setAttribute('id', 'stream' + stream.streamId)
-        document.body.appendChild(div)
+        ($ '#content').append(div)
 
         subscribeProps = {height:240, width:320}
         session.subscribe(stream, div.id)
