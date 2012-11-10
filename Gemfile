@@ -4,6 +4,9 @@ gem 'rails'
 gem 'jquery-rails'
 gem 'bcrypt-ruby'
 gem 'pg'
+gem 'opentok'
+gem 'pusher'
+gem 'thin'
 
 group :development, :test do
   gem 'rspec-rails'

@@ -13,6 +13,8 @@ SampleApp::Application.routes.draw do
   match '/resources',   to: 'static_pages#resources'
   match '/pricing',   to: 'static_pages#pricing'
 
+  match '/pusher/auth_endpoint', to: 'pusher#auth'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,0 +1,23 @@
+
+
+Pusher.channel_auth_endpoint = '/pusher/auth_endpoint'
+
+window.PusherAPI = new (Backbone.Model.extend 
+  api: new Pusher('<%= APP["pusher_api_key"] %>')
+  
+  subscribe: (channel) -> 
+    pusher_channel = @api.subscribe channel
+    new Channel({pusher_channel: pusher_channel})
+  
+  ready: (f) ->
+    @api.connection.bind 'ready', f
+)()
+
+window.Channel = Backbone.Model.extend 
+  
+  initialize: (attrs) ->
+    @pusher_channel = attrs.pusher_channel
+
+  bind: (event, f) -> @pusher_channel.bind event, f
+  
+  members: -> @pusher_channel.members

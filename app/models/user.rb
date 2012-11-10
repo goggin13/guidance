@@ -11,7 +11,12 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
-
+  
+  def serializable_hash(options={})
+    options.merge!(:except => [:password_digest, :remember_token])
+    super(options)
+  end
+  
   private
 
     def create_remember_token

@@ -1,6 +1,6 @@
 
 
-### A new user interacts with an online guidance counselor
+### A new user interacts with a currently online guidance counselor
 
 * Jane is emailed a link to Virtual Guidance Counselor from her HS
 * She clicks the link, and lands on the home page
@@ -31,16 +31,27 @@
 * She clicks the schedules tab to see if any VGCs are available.
 * ?????
 
-### A guidance counselor schedules a future chat session
+### A guidance counselor accepts an appointment with a student
+
+### A guidance counselor rejects an appointment with a student
+
+### A guidance counselor offers a future chat session
 
 * Gizem logs into her account at VGC.com
 * She is redirected to her home screen
 
 ### A student signs up for a future chat session
 
+* Jane logs into her account at VGC.com
+* She is redirected to her home screen
 
 ### A guidance counselor logs in and starts a scheduled chat session
 
+* Gizem logs into her account at VGC.com
+* She is redirected to her home screen
 
-### A student logs in and starts a chat session
+### A student logs in and starts a scheduled chat session
+
+* Jane logs into her account at VGC.com
+* She is redirected to her home screen
 

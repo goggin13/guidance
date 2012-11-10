@@ -3,7 +3,6 @@
   <head>
     <title><%= full_title(yield(:title)) %></title>
     <%= stylesheet_link_tag    "application", media: "all" %>
-    <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
   </head>
@@ -18,4 +17,24 @@
       <%= debug(params) if Rails.env.development? %>
     </div>
   </body>
+  
+  <script type='text/template' id='chat_window_template'>
+    <h3>Online users</h3>
+    <ul></ul>
+  </script>
+  
+  <script type='text/template' id='chat_user_row_template'>
+    {{ name }} | <span class='video_chat_me'>Video Chat Me</span>
+  </script>
+  
+  <%= javascript_include_tag "application" %>
+  
+  <script type="text/javascript">
+    <% unless current_user.nil? %>
+      window.current_user = new User(<%= current_user.to_json.html_safe %>);
+    <% else %>
+      window.current_user = false;
+    <% end %>
+  </script>
+  
 </html>

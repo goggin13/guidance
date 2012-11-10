@@ -105,5 +105,12 @@ describe User do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end
+  
+  describe "serializable hash" do
+    subject { @user.serializable_hash }
+    
+    it { should_not have_key 'password_digest' }
+    it { should_not have_key 'remember_token' }    
 
+  end
 end

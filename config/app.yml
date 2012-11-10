@@ -1,0 +1,22 @@
+
+third_party_apps: &third_party_apps
+  open_tok_api_key: 21476572
+  open_tok_api_secret: '1687b6bcfcb6a849de71922047b28a5785919c60'
+  pusher_app_id: '31431'
+  pusher_api_key: 'dd67cc3c297260b930b8'
+  pusher_api_secret: 'f8a2c7714d0f6f2b4171'
+      
+test:
+  <<: *third_party_apps
+  open_tok_api_key: 12345567
+  open_tok_api_secret: '1234kjsfmdlkm345lrewmfdslkwmdfgsdlkfmg34'
+  pusher_app_id: '1'
+  pusher_api_key: 'jk1234hj123kjh4kj1243'
+  pusher_api_secret: 'jk1234hj123kjh4kj1243'
+  
+development:
+  <<: *third_party_apps
+  
+production:
+  <<: *third_party_apps
+  

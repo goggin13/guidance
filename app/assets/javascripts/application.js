@@ -12,4 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require frameworks/handlebars
+//= require frameworks/underscore
+//= require frameworks/backbone
+//= require frameworks/pusher
+//= require models/pusher
 //= require_tree .
+
