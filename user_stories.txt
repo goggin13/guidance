@@ -1,0 +1,46 @@
+
+
+### A new user interacts with an online guidance counselor
+
+* Jane is emailed a link to Virtual Guidance Counselor from her HS
+* She clicks the link, and lands on the home page
+* She fills out the sign up form, including her
+  - username
+  - email
+  - password
+  - a checkbox indicating she is a student
+    ??????? How do we prevent fake instructors?
+* She submits the form, and is presented with the home screen again,
+  as a logged in user.
+* She clicks the schedule tab
+    ????? should this be on the home screen? It's the main use case
+    for our site when a user is logged in.  Extra click?
+* She sees a list of virtual guidance counselors, and when they
+  will be available.  She sees that one of the guidance counselors,
+  Gizem, is currently online.
+* She clicks a button next to Gizem's name that says "Chat now".
+* She is redirected to a page with a video chat where she can see 
+  Gizem's face, as well as her own.  Underneath the video chat
+  is a space to send text messages. 
+
+
+### An existing user requests an appointment with a guidance counselor
+
+* Jane logs into her account at VGC.com.  
+* She is redirected to her home screen
+* She clicks the schedules tab to see if any VGCs are available.
+* ?????
+
+### A guidance counselor schedules a future chat session
+
+* Gizem logs into her account at VGC.com
+* She is redirected to her home screen
+
+### A student signs up for a future chat session
+
+
+### A guidance counselor logs in and starts a scheduled chat session
+
+
+### A student logs in and starts a chat session
+
