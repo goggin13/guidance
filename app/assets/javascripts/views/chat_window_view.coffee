@@ -11,13 +11,23 @@ window.ChatWindowView = BaseView.extend
     
   initialize: ->
     _.bindAll @
+    @rows = []
+    @model.bind_added @add_row_for_user
+    @model.bind_removed @remove_row_for_user
+  
+  remove_row_for_user: (user) ->
+    _.each @rows, (row) ->
+      row.remove() if row.model.getId() == user.getId()
+  
+  add_row_for_user: (user) ->
+    @remove_row_for_user(user)
+    row = new ChatUserRow(model: user)
+    @rows.push row
+    @$('ul').append row.render().el
     
   render: ->
     @$el.html @template({})
-    $ul = @$('ul')
-    @model.members.each (member) ->
-      row = new ChatUserRow(model: member)
-      $ul.append row.render().el
+    @model.members.each (member) => (@add_row_for_user member)
     @
 
 

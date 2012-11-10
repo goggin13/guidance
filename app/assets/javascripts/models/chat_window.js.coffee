@@ -1,5 +1,4 @@
 
-
 window.ChatWindow = Backbone.Model.extend
     
   initialize: ->
@@ -11,20 +10,15 @@ window.ChatWindow = Backbone.Model.extend
       
       # build collection of users
       @channel.members().each (m) => 
-        @members.add(new User(m.info)) unless parseInt(m.id, 10) == (current_user.getId()) 
-      
-      @members.each (user) => (@add_member user) 
+        @members.add(new User(m.info)) unless parseInt(m.info.id, 10) == (current_user.getId()) 
       
       @ready() if @ready
       
-    @channel.bind 'pusher:member_added', (member) => (@add_member member)
-    @channel.bind 'pusher:member_removed', (member) => (@remove_member member)
+    @channel.bind 'pusher:member_added', (member) =>
+      (@added new User(member.info)) if @added
+    @channel.bind 'pusher:member_removed', (member) => 
+      (@removed new User(member.info)) if @removed
   
   ready: (f) -> @ready = f
-  
-  add_member: (member) ->
-    console.log "add", member
-
-  remove_member: (member) ->
-    console.log "remove", member
-
+  bind_added: (f) -> @added = f
+  bind_removed: (f) -> @removed = f
