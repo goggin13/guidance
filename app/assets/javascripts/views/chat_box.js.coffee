@@ -4,11 +4,12 @@ window.ChatBox = BaseView.extend
   id: 'chat_box'
   
   initialize: ->
+    _.bindAll @
     @channel = PusherAPI.subscribe "presence-#{@options.room_id}"
     console.log "listening to room presence-#{@options.room_id}"
     
     is_typing_view = false
-    @channel.bind 'client-is-typing', (data) ->
+    @channel.bind 'client-is-typing', (data) =>
       unless is_typing_view
         is_typing_view = new IsTypingMessage(model: data)
         @$('ul').append is_typing_view.el
