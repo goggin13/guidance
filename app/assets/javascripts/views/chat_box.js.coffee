@@ -9,10 +9,22 @@ window.ChatBox = BaseView.extend
     console.log "listening to room presence-#{@options.room_id}"
     
     is_typing_view = false
+    
+    old_text = false
+    entered_text = ->
+      
     @channel.bind 'client-is-typing', (data) =>
       unless is_typing_view
         is_typing_view = new IsTypingMessage(model: data)
         @$('ul').append is_typing_view.el
+      if data.message == ""
+        is_typing_view.remove()
+        is_typing_view = false
+      if data.message == old_text
+        data.message == "has entered text."
+      else 
+        old_text = data.message
+        data.message = "is typing..."
       is_typing_view.model = data
       is_typing_view.render()
 
