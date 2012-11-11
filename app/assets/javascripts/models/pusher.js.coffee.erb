@@ -31,6 +31,10 @@ window.Channel = Backbone.Model.extend
 
 window.OpenTokAPI = new (Backbone.Model.extend
   video_chat: (session_id) ->
+    view = new ChatBox(id: session_id)
+    $('#content').append view.render().el
+    return
+    
     apiKey = '1127'
     token = 'T1==cGFydG5lcl9pZD0xMTI3JnNpZz1hMzczM2JmOTJiODk2MTk1ZWE2MGFkNjY3YTJkYmYzMDY5MDVmMjQ2OnNlc3Npb25faWQ9MV9NWDR4TVRJM2ZuNVRZWFFnVG05MklERXdJREF3T2pBMU9qQTNJRkJUVkNBeU1ERXlmakF1T1RRNE5UY3dNMzQmY3JlYXRlX3RpbWU9MTM1MjUzNDcwNyZleHBpcmVfdGltZT0xMzUyNjIxMTA3JnJvbGU9cHVibGlzaGVyJm5vbmNlPTk4ODcxMw=='
 
@@ -38,8 +42,8 @@ window.OpenTokAPI = new (Backbone.Model.extend
 
     session = TB.initSession(session_id)
     session.addEventListener 'sessionConnected', (data) -> sessionConnectedHandler(data)
-    session.addEventListener 'sessionConnected', ->
-      ($ '#stream-subscriber, #stream-publisher').fadeOut()
+    session.addEventListener 'sessionDisconnected', -> 
+      ($ 'object').fadeOut()
     session.addEventListener 'streamCreated', (data) -> streamCreatedHandler(data)
     session.connect(apiKey, token)
 
@@ -50,7 +54,8 @@ window.OpenTokAPI = new (Backbone.Model.extend
       publisher = TB.initPublisher(apiKey, id, publishProps)
       session.publish(publisher)
       subscribeToStreams(event.streams)
-
+      
+      
     streamCreatedHandler = (event) -> subscribeToStreams(event.streams)
 
     subscribeToStreams = (streams) ->
@@ -60,7 +65,19 @@ window.OpenTokAPI = new (Backbone.Model.extend
         $div = ($ "<div id='#{id}' class='video_display'></div>")
         $div.attr('id', id)
         ($ '#content').append($div)
-
+        
         subscribeProps = {height:240, width:320}
         session.subscribe(stream, id, subscribeProps)
+        
+        view = new ChatBox()
+        $('#content').append view.render().el
+    
 )()
+
+
+window.BaseView = Backbone.View.extend
+  template: (context) ->
+    raw_template = @template_element.html()
+    template_function = Handlebars.compile(raw_template)
+    template_function(context)
+

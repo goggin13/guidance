@@ -1,10 +1,4 @@
 
-BaseView = Backbone.View.extend
-  template: (context) ->
-    raw_template = @template_element.html()
-    template_function = Handlebars.compile(raw_template)
-    template_function(context)
-
 window.ChatWindowView = BaseView.extend
   model: window.ChatWindow
   template_element: $("#chat_window_template")
@@ -70,7 +64,6 @@ window.ChatUserRow = BaseView.extend
     @options.channel.trigger "request", data
     OpenTokAPI.video_chat data.session_id
     
-  
   render: ->
     @$el.html @template(@model.toJSON())
     @
