@@ -31,6 +31,10 @@ window.Channel = Backbone.Model.extend
 
 window.OpenTokAPI = new (Backbone.Model.extend
   video_chat: (session_id) ->
+    ($ '#chat_window_container').remove()
+    $div = $ "<div>connecting...</div>"
+    ($ '#my_content').html ""
+    ($ '#my_content').append $div
     apiKey = '1127'
     session_id = '1_MX4xMTI3fn5TdW4gTm92IDExIDA5OjA0OjM2IFBTVCAyMDEyfjAuNjc3OTc5MjN-'
     token = 'T1==cGFydG5lcl9pZD0xMTI3JnNpZz02YzFkNjIwYjgxZDI0YTc4ZDIwNzY0MDViMmU5NzhiMDk0OWM0YzIyOnNlc3Npb25faWQ9MV9NWDR4TVRJM2ZuNVRkVzRnVG05MklERXhJREE1T2pBME9qTTJJRkJUVkNBeU1ERXlmakF1TmpjM09UYzVNak4tJmNyZWF0ZV90aW1lPTEzNTI2NTM0NzgmZXhwaXJlX3RpbWU9MTM1MjczOTg3OCZyb2xlPXB1Ymxpc2hlciZub25jZT03NTQ2NQ=='
@@ -45,6 +49,7 @@ window.OpenTokAPI = new (Backbone.Model.extend
     session.connect(apiKey, token)
 
     sessionConnectedHandler = (event) ->
+      $div.remove()
       publishProps = {height:85, width:80}
       id = "stream-publisher"
       $('#my_content').append("<div id='#{id}' class='video_display'></div>")
@@ -58,6 +63,7 @@ window.OpenTokAPI = new (Backbone.Model.extend
     subscribeToStreams = (streams) ->
       _.each streams, (stream) ->
         return if (stream.connection.connectionId == session.connection.connectionId)
+        $div.remove()
         id = "stream-subscriber"
         $div = ($ "<div id='#{id}' class='video_display'></div>")
         $div.attr('id', id)
@@ -72,8 +78,10 @@ window.OpenTokAPI = new (Backbone.Model.extend
         view = new CollaborationView()
         $('#my_content').append view.render().el
         
-        view = new ChatBox(room_id: session_id)
+        view = new ChatBox(room_id: "blah")
         $('#my_content').append view.render().el
+        
+        $('#my_content').append "<div class='clear'></div>"
     
 )()
 
