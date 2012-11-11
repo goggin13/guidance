@@ -2,7 +2,9 @@
 window.ChatBox = BaseView.extend
   template_element: $("#chat_box_template")
   id: 'chat_box'
-  
+  event:
+    'keydown #chat_input': 'keypress'
+
   initialize: ->
     _.bindAll @
     @channel = PusherAPI.subscribe "presence-#{@options.room_id}"
