@@ -9,7 +9,12 @@ window.ChatBox = BaseView.extend
     console.log "listening to room presence-#{@options.room_id}"
     
     is_typing_view = false
-    old_text = false
+    entered_text_timeout = false
+    entered_text = ->
+      return unless is_typing_view
+      is_typing_view.model.message = "has entered text."
+      is_typing_view.render()
+      
     @channel.bind 'client-is-typing', (data) =>
       unless is_typing_view
         is_typing_view = new IsTypingMessage(model: data)
@@ -17,13 +22,12 @@ window.ChatBox = BaseView.extend
       if data.message == ""
         is_typing_view.remove()
         is_typing_view = false
-      if data.message == old_text
-        data.message == "has entered text."
-      else 
-        old_text = data.message
-        data.message = "is typing..."
+      old_text = data.message
+      data.message = "is typing..."
       is_typing_view.model = data
       is_typing_view.render()
+      (clearTimeout entered_text_timeout) if entered_text_timeout
+      entered_text_timeout = setTimeout entered_text, 500
 
     @channel.bind 'client-message', (data) =>
       if is_typing_view
