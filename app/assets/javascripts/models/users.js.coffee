@@ -5,5 +5,7 @@
 window.User = Backbone.Model.extend
   getId: -> parseInt(@get('id'), 10)
   getName: -> @get('name')
+  isChatting: -> @get('is_chatting')
+  setIsChatting: (v) -> @set(is_chatting: v)
 
 window.Users = Backbone.Collection.extend({})

@@ -1,6 +1,8 @@
 
 
 .nav {
+  height: 30px;
+  margin-top: -20px;
   li {
     list-style-type: none;
     float: left;
@@ -36,9 +38,46 @@
   background-image: url(<%= asset_path 'group_shot.jpg' %>);
   color: white;
   font-size: 2em;
+  font-weight: bold;
   height: 203px;
   line-height: 1.5em;
   padding: 30px 0 0 30px;
-  width: 870px;  
+  width: 870px; 
+  margin-bottom: 25px;
 }
 
+#top_floater {
+  height: 20px;
+  background: black;
+}
+
+#page_wrapper {
+  background-color: lightgray;
+  min-height: 600px;
+  padding: 0px 10px;
+}
+
+.video_chat_me {
+  color: blue;
+  cursor: pointer;
+}
+
+.decline {
+  color: red;
+  cursor: pointer;
+}
+
+.accept {
+  color: green;
+  cursor: pointer;
+}
+
+.video_display {
+  margin-right: 25px;
+  margin-top: 25px;
+}
+
+#stream-subscriber,
+#stream-publisher {
+  margin: 25px;
+}

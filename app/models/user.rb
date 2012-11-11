@@ -12,9 +12,26 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
   
+  attr_accessible :avatar
+  
+  has_attached_file :avatar,
+    :styles => {
+       :small => '50x50#',
+       :medium => '250x250#',
+    },
+    :storage => :s3,
+    :s3_credentials => "#{Rails.root}/config/s3.yml",
+    :s3_protocol => 'https',
+    :default_url => 'https://s3.amazonaws.com/vgc-assets-production/default/:style',
+    :path => "/:style/:id",
+    :s3_headers => { 'Expires' => 1.year.from_now.httpdate }
+  
   def serializable_hash(options={})
     options.merge!(:except => [:password_digest, :remember_token])
-    super(options)
+    super(options).merge :avatar => {
+      :small => avatar(:small),
+      :medium => avatar(:medium),
+    }
   end
   
   private

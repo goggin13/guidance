@@ -1,0 +1,16 @@
+
+
+development:
+  bucket: vgc-assets-development
+  access_key_id: AKIAJMX3BA6M6BZHSILQ
+  secret_access_key: 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
+
+test:
+  bucket: vgc-assets-test
+  access_key_id: AKIAJMX3BA6M6BZHSILQ
+  secret_access_key: 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
+
+production:
+  bucket: vgc-assets-development
+  access_key_id: AKIAJMX3BA6M6BZHSILQ
+  secret_access_key: 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

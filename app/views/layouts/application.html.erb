@@ -7,7 +7,7 @@
     <%= render 'layouts/shim' %>
   </head>
   <body>
-    <div class="container">
+    <div id="page_wrapper" class="container">
       <%= render 'layouts/header' %>
       <% flash.each do |key, value| %>
         <%= content_tag(:div, value, class: "alert alert-#{key}") %>
@@ -16,7 +16,6 @@
         <%= yield %>
       </div>
       <%= render 'layouts/footer' %>
-      <%= debug(params) if Rails.env.development? %>
     </div>
     
     <div id='myPublisherDiv'>
@@ -30,7 +29,12 @@
   </script>
   
   <script type='text/template' id='chat_user_row_template'>
-    {{ name }} | <span class='video_chat_me'>Video Chat Me</span>
+    <img src='{{ avatar.small }}' alt='{{ name }}' /> {{ name }} | <span class='video_chat_me'>video chat</span>
+  </script>
+  
+  <script type="text/template" id="video_chat_invitation_template">
+    {{ name }} wishes to chat with you <br/>
+      (<span class='accept'>accept</span> | <span class='decline'>decline</span>)
   </script>
   
   <%= javascript_include_tag "application" %>

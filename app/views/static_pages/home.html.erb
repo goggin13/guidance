@@ -6,16 +6,9 @@
 
 <% if signed_in? %>
   
-  wassup <%= current_user.name %>
-  
 <% else %>
   
   <%= link_to "Sign up now!", signup_path %>
 
 <% end %>
 
-<div>
-  <p>
-    u + us = moar skool
-  </p>
-</div>

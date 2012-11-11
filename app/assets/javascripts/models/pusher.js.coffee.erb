@@ -28,3 +28,39 @@ window.Channel = Backbone.Model.extend
     console.log "trigger", event, data
     @pusher_channel.trigger event, data
 
+
+window.OpenTokAPI = new (Backbone.Model.extend
+  video_chat: (session_id) ->
+    apiKey = '1127'
+    token = 'T1==cGFydG5lcl9pZD0xMTI3JnNpZz1hMzczM2JmOTJiODk2MTk1ZWE2MGFkNjY3YTJkYmYzMDY5MDVmMjQ2OnNlc3Npb25faWQ9MV9NWDR4TVRJM2ZuNVRZWFFnVG05MklERXdJREF3T2pBMU9qQTNJRkJUVkNBeU1ERXlmakF1T1RRNE5UY3dNMzQmY3JlYXRlX3RpbWU9MTM1MjUzNDcwNyZleHBpcmVfdGltZT0xMzUyNjIxMTA3JnJvbGU9cHVibGlzaGVyJm5vbmNlPTk4ODcxMw=='
+
+    TB.setLogLevel(TB.DEBUG)
+
+    session = TB.initSession(session_id)
+    session.addEventListener 'sessionConnected', (data) -> sessionConnectedHandler(data)
+    session.addEventListener 'sessionConnected', ->
+      ($ '#stream-subscriber, #stream-publisher').fadeOut()
+    session.addEventListener 'streamCreated', (data) -> streamCreatedHandler(data)
+    session.connect(apiKey, token)
+
+    sessionConnectedHandler = (event) ->
+      publishProps = {height:240, width:320}
+      id = "stream-publisher"
+      $('#content').append("<div id='#{id}' class='video_display'></div>")
+      publisher = TB.initPublisher(apiKey, id, publishProps)
+      session.publish(publisher)
+      subscribeToStreams(event.streams)
+
+    streamCreatedHandler = (event) -> subscribeToStreams(event.streams)
+
+    subscribeToStreams = (streams) ->
+      _.each streams, (stream) ->
+        return if (stream.connection.connectionId == session.connection.connectionId)
+        id = "stream-subscriber"
+        $div = ($ "<div id='#{id}' class='video_display'></div>")
+        $div.attr('id', id)
+        ($ '#content').append($div)
+
+        subscribeProps = {height:240, width:320}
+        session.subscribe(stream, id, subscribeProps)
+)()
