@@ -3,7 +3,7 @@ window.ChatBox = BaseView.extend
   template_element: $("#chat_box_template")
   id: 'chat_box'
   event:
-    'keydown #chat_input': 'keypress'
+    'keydown #chat_input': 'keypressed'
 
   initialize: ->
     _.bindAll @
@@ -40,8 +40,10 @@ window.ChatBox = BaseView.extend
     
     setInterval @process_keypress, 500
   
-  keypress: (e) ->
+  keypressed: (e) ->
+    console.log "keypress"
     if e.keyCode == 13
+      console.log "send message"
       @send_message()
     else
       @process_keypress()
@@ -50,7 +52,7 @@ window.ChatBox = BaseView.extend
   process_keypress: ->
     current = ($ '#chat_input').val()
     return if current == @last_sent
-
+    
     @channel.trigger 'is-typing', {
       user: current_user.toJSON(),
       message: current
@@ -87,3 +89,12 @@ IsTypingMessage = BaseView.extend
   render: ->
     @$el.html @template(@model)
     @
+    
+window.CollaborationView = BaseView.extend
+  template_element: $("#collaboration_template")
+  id: "collaboration_view"
+  
+  render: ->
+    @$el.html @template(@model)
+    @  
+  

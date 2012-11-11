@@ -10,6 +10,7 @@ SampleApp::Application.routes.draw do
   match '/signout',  to: 'sessions#destroy', via: :delete
 
   match '/about',   to: 'static_pages#about'
+  match '/counselors',   to: 'static_pages#counselors'
   match '/resources',   to: 'static_pages#resources'
   match '/pricing',   to: 'static_pages#pricing'
 

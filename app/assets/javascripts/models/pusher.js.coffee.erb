@@ -31,13 +31,9 @@ window.Channel = Backbone.Model.extend
 
 window.OpenTokAPI = new (Backbone.Model.extend
   video_chat: (session_id) ->
-    view = new ChatBox(room_id: session_id)
-    console.log view.render()
-    $('#my_content').append view.render().el
-    return
-    
     apiKey = '1127'
-    token = 'T1==cGFydG5lcl9pZD0xMTI3JnNpZz1hMzczM2JmOTJiODk2MTk1ZWE2MGFkNjY3YTJkYmYzMDY5MDVmMjQ2OnNlc3Npb25faWQ9MV9NWDR4TVRJM2ZuNVRZWFFnVG05MklERXdJREF3T2pBMU9qQTNJRkJUVkNBeU1ERXlmakF1T1RRNE5UY3dNMzQmY3JlYXRlX3RpbWU9MTM1MjUzNDcwNyZleHBpcmVfdGltZT0xMzUyNjIxMTA3JnJvbGU9cHVibGlzaGVyJm5vbmNlPTk4ODcxMw=='
+    session_id = '1_MX4xMTI3fn5TdW4gTm92IDExIDA5OjA0OjM2IFBTVCAyMDEyfjAuNjc3OTc5MjN-'
+    token = 'T1==cGFydG5lcl9pZD0xMTI3JnNpZz02YzFkNjIwYjgxZDI0YTc4ZDIwNzY0MDViMmU5NzhiMDk0OWM0YzIyOnNlc3Npb25faWQ9MV9NWDR4TVRJM2ZuNVRkVzRnVG05MklERXhJREE1T2pBME9qTTJJRkJUVkNBeU1ERXlmakF1TmpjM09UYzVNak4tJmNyZWF0ZV90aW1lPTEzNTI2NTM0NzgmZXhwaXJlX3RpbWU9MTM1MjczOTg3OCZyb2xlPXB1Ymxpc2hlciZub25jZT03NTQ2NQ=='
 
     TB.setLogLevel(TB.DEBUG)
 
@@ -49,7 +45,7 @@ window.OpenTokAPI = new (Backbone.Model.extend
     session.connect(apiKey, token)
 
     sessionConnectedHandler = (event) ->
-      publishProps = {height:240, width:320}
+      publishProps = {height:85, width:80}
       id = "stream-publisher"
       $('#my_content').append("<div id='#{id}' class='video_display'></div>")
       publisher = TB.initPublisher(apiKey, id, publishProps)
@@ -67,10 +63,16 @@ window.OpenTokAPI = new (Backbone.Model.extend
         $div.attr('id', id)
         ($ '#my_content').append($div)
         
-        subscribeProps = {height:240, width:320}
+        subscribeProps = {height:(240*(2/3)), width:(320*(2/3))}
         session.subscribe(stream, id, subscribeProps)
         
-        view = new ChatBox()
+        
+        $('#chat_window_container').fadeOut()
+        
+        view = new CollaborationView()
+        $('#my_content').append view.render().el
+        
+        view = new ChatBox(room_id: session_id)
         $('#my_content').append view.render().el
     
 )()

@@ -2,6 +2,7 @@
 window.ChatWindowView = BaseView.extend
   model: window.ChatWindow
   template_element: $("#chat_window_template")
+  id: 'counselors_list'
     
   initialize: ->
     _.bindAll @

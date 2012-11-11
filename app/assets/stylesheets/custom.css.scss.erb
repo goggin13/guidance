@@ -394,11 +394,9 @@ ul.style3 .first {
 
 #chat_window_container {
   background: none repeat scroll 0 0 white;
+  border-radius: 5px 5px 5px 5px;
   display: none;
-  float: right;
   padding: 10px;
-  width: 258px;
-  border-radius: 5px 5px 5px 5px;  
 }
 
 #top_floater {
@@ -438,9 +436,9 @@ ul.style3 .first {
 }
 
 object {
-  margin-bottom: 30px;
-  margin-left: 90px;
-  margin-right: 25px;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 10px;
 }
 
 #chat_input {
@@ -455,7 +453,7 @@ object {
   margin-left: 39px;
   padding: 1px;
   width: 240px;
-  
+  clear: left;
   li {
     line-height: 0.9em;
   }
@@ -465,4 +463,31 @@ object {
   height: 170px;
   overflow-y: auto;
   padding-top: 10px;
+}
+
+#collaboration_view {
+  background-color: white;
+  border: medium solid black;
+  border-radius: 5px 5px 5px 5px;
+  float: right;
+  height: 500px;
+  margin-right: 85px;
+  width: 500px;
+  margin-bottom: 30px;
+}
+
+.clear {
+  clear:both;
+}
+
+#counselors_list ul {
+  div {
+    width: 200px;
+    float: left; 
+    margin-right: 25px;
+    p {
+      line-height: 1em;
+      font-size: .8em;
+    }    
+  }  
 }

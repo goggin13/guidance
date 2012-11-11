@@ -24,12 +24,17 @@
   </body>
   
   <script type='text/template' id='chat_window_template'>
-    <h3>users</h3>
+    <h3>Online Counselors</h3>
     <ul></ul>
+    <div class="clear"></div>
   </script>
   
   <script type='text/template' id='chat_user_row_template'>
-    <img src='{{ avatar.small }}' alt='{{ name }}' /> {{ name }} | <span class='video_chat_me'>video chat</span>
+    <img src='{{ avatar.small }}' alt='{{ name }}' /> {{ name }} <br/>
+    <p>
+      {{ bio }}
+    </p>
+    <span class='video_chat_me'>chat with {{ name }}</span>
   </script>
 
   <script type='text/template' id='chat_user_row_template'>
@@ -54,6 +59,10 @@
   
   <script type="text/template" id="chat_is_typing_template">
     {{ user.name }} {{ message }}
+  </script>
+  
+  <script type="text/template" id="collaboration_template">
+    Stuff
   </script>
   
   <%= javascript_include_tag "application" %>
