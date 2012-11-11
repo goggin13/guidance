@@ -2,8 +2,8 @@
 window.ChatBox = BaseView.extend
   template_element: $("#chat_box_template")
   id: 'chat_box'
-  event:
-    'keydown #chat_input': 'keypressed'
+  events:
+    'keypress #chat_input': 'handle_keypressed'
 
   initialize: ->
     _.bindAll @
@@ -24,6 +24,7 @@ window.ChatBox = BaseView.extend
       if data.message == ""
         is_typing_view.remove()
         is_typing_view = false
+        return
       old_text = data.message
       data.message = "is typing..."
       is_typing_view.model = data
@@ -40,13 +41,11 @@ window.ChatBox = BaseView.extend
     
     setInterval @process_keypress, 500
   
-  keypressed: (e) ->
-    console.log "keypress"
+  handle_keypressed: (e) ->
+    console.log "keypressed"
     if e.keyCode == 13
       console.log "send message"
       @send_message()
-    else
-      @process_keypress()
   
   last_sent: ""
   process_keypress: ->

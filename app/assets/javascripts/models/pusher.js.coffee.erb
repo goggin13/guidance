@@ -72,11 +72,15 @@ window.OpenTokAPI = new (Backbone.Model.extend
         subscribeProps = {height:(240*(2/3)), width:(320*(2/3))}
         session.subscribe(stream, id, subscribeProps)
         
-        
         $('#chat_window_container').fadeOut()
         
-        view = new CollaborationView()
-        $('#my_content').append view.render().el
+        collab_view = new CollaborationView()
+        $('#my_content').append collab_view.el
+        show_collab = ->
+          $el = ($ collab_view.el).hide()
+          collab_view.render()
+          $el.fadeIn()
+        setTimeout show_collab, 1500
         
         view = new ChatBox(room_id: "blah")
         $('#my_content').append view.render().el

@@ -21,10 +21,10 @@ jQuery ->
       # view = new CollaborationView()
       # $('#my_content').append view.render().el
       # 
-      # view = new ChatBox(room_id: "blah")
-      # $('#my_content').append view.render().el
+      view = new ChatBox(room_id: "blah")
+      $('#my_content').append view.render().el
       # 
-      # $('#my_content').append "<div class='clear'></div>"
+      $('#my_content').append "<div class='clear'></div>"
       
   window.router = new Router()
   Backbone.history.start({pushState: true})

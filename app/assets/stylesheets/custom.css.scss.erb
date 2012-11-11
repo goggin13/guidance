@@ -406,8 +406,9 @@ ul.style3 .first {
 
 #page_wrapper {
   background-color: lightgray;
-  min-height: 600px;
-  padding: 0px 10px;
+  min-height: 710px;
+  overflow: hidden;
+  padding: 0 10px;
 }
 
 .video_chat_me {
@@ -439,6 +440,8 @@ object {
   float: left;
   margin-right: 5px;
   margin-bottom: 10px;
+  z-index:10;
+  position: relative;
 }
 
 #chat_input {
@@ -454,6 +457,8 @@ object {
   padding: 1px;
   width: 240px;
   clear: left;
+  position: relative;
+  z-index: 10;
   li {
     line-height: 0.9em;
   }
@@ -467,7 +472,6 @@ object {
 
 #collaboration_view {
   background-color: white;
-  border: medium solid black;
   border-radius: 5px 5px 5px 5px;
   float: right;
   height: 500px;
@@ -491,3 +495,39 @@ object {
     }    
   }  
 }
+
+#mural_demo_wrapper {
+  position: relative;
+  margin-left: -236px;
+  object {
+    z-index: 1;
+  }
+}
+
+#mural_left_hider {
+  background-color: lightgray;
+     height: 580px;
+     position: absolute;
+     width: 241px;
+     z-index: 2;
+}
+
+#mural_right_hider {
+  background-color: lightgray;
+      height: 580px;
+      left: 732px;
+      position: absolute;
+      width: 245px;
+      z-index: 2;
+}
+
+#mural_bottom_hider {
+  background-color: lightgray;
+      height: 42px;
+      left: 200px;
+      position: absolute;
+      top: 538px;
+      width: 779px;
+      z-index: 2;
+}
+
