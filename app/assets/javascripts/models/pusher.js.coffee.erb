@@ -31,8 +31,9 @@ window.Channel = Backbone.Model.extend
 
 window.OpenTokAPI = new (Backbone.Model.extend
   video_chat: (session_id) ->
-    view = new ChatBox(id: session_id)
-    $('#content').append view.render().el
+    view = new ChatBox(room_id: session_id)
+    console.log view.render()
+    $('#my_content').append view.render().el
     return
     
     apiKey = '1127'
@@ -50,7 +51,7 @@ window.OpenTokAPI = new (Backbone.Model.extend
     sessionConnectedHandler = (event) ->
       publishProps = {height:240, width:320}
       id = "stream-publisher"
-      $('#content').append("<div id='#{id}' class='video_display'></div>")
+      $('#my_content').append("<div id='#{id}' class='video_display'></div>")
       publisher = TB.initPublisher(apiKey, id, publishProps)
       session.publish(publisher)
       subscribeToStreams(event.streams)
@@ -64,13 +65,13 @@ window.OpenTokAPI = new (Backbone.Model.extend
         id = "stream-subscriber"
         $div = ($ "<div id='#{id}' class='video_display'></div>")
         $div.attr('id', id)
-        ($ '#content').append($div)
+        ($ '#my_content').append($div)
         
         subscribeProps = {height:240, width:320}
         session.subscribe(stream, id, subscribeProps)
         
         view = new ChatBox()
-        $('#content').append view.render().el
+        $('#my_content').append view.render().el
     
 )()
 

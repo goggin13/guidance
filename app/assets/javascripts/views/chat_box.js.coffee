@@ -6,11 +6,15 @@ window.ChatBox = BaseView.extend
     'keydown #chat_input': 'keypress'
   
   initialize: ->
-    @channel = PusherAPI.subscribe "presence-#{@options.id}"
+    @channel = PusherAPI.subscribe "presence-#{@options.room_id}"
+    console.log "listening to room presence-#{@options.room_id}"
     @channel.bind 'client-is-typing', (data) ->
       console.log "is typing"
       console.log data
-    @channel.bind 'client-message', (data) ->
+    @channel.bind 'client-message', (data) =>
+      console.log "data"
+      view = new ChatMessage(model: data)
+      @$('ul').append view.render().el
       console.log "message"
       console.log data
   
@@ -30,12 +34,24 @@ window.ChatBox = BaseView.extend
       @last_sent = new Date()
     
   send_message: ->
-    @channel.trigger 'message', {
+    data = {
       user: current_user.toJSON(),
       message: ($ '#chat_input').val()
     }
+    console.log "SEND MESSAGEs"
+    @channel.trigger 'message', data
+    view = new ChatMessage(model: data)
+    @$('ul').append view.render().el
     ($ '#chat_input').val ''
   
   render: ->
     @$el.html @template()
+    @
+
+ChatMessage = BaseView.extend
+  template_element: $("#chat_message_template")
+  tagName: 'li'
+  
+  render: ->
+    @$el.html @template(@model)
     @

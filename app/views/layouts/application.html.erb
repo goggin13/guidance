@@ -12,7 +12,7 @@
       <% flash.each do |key, value| %>
         <%= content_tag(:div, value, class: "alert alert-#{key}") %>
       <% end %>
-      <div id='content'>
+      <div id='my_content'>
         <%= yield %>
       </div>
       <%= render 'layouts/footer' %>
@@ -42,9 +42,15 @@
   </script>
   
   <script type="text/template" id="chat_box_template">
-    <ul></ul>
+    <div id="chat_messages_wrapper">
+      <ul></ul>
+    </div>
     <input type="text" id="chat_input" name="chat_input" />
   </script>
+  
+  <script type="text/template" id="chat_message_template">
+    <span class='chat_message_name'>{{ user.name }}</span>: {{ message }}
+  </script>  
   
   <%= javascript_include_tag "application" %>
   
