@@ -2,21 +2,27 @@
 window.ChatBox = BaseView.extend
   template_element: $("#chat_box_template")
   id: 'chat_box'
-  events: 
-    'keydown #chat_input': 'keypress'
   
   initialize: ->
     @channel = PusherAPI.subscribe "presence-#{@options.room_id}"
     console.log "listening to room presence-#{@options.room_id}"
+    
+    is_typing_view = false
     @channel.bind 'client-is-typing', (data) ->
-      console.log "is typing"
-      console.log data
+      unless is_typing_view
+        is_typing_view = new IsTypingMessage(model: data)
+        @$('ul').append is_typing_view.el
+      is_typing_view.model = data
+      is_typing_view.render()
+
     @channel.bind 'client-message', (data) =>
-      console.log "data"
+      if is_typing_view
+        is_typing_view.remove() 
+        is_typing_view = false
       view = new ChatMessage(model: data)
       @$('ul').append view.render().el
-      console.log "message"
-      console.log data
+    
+    setInterval @process_keypress, 500
   
   keypress: (e) ->
     if e.keyCode == 13
@@ -24,14 +30,16 @@ window.ChatBox = BaseView.extend
     else
       @process_keypress()
   
-  last_sent: false
+  last_sent: ""
   process_keypress: ->
-    if !@last_sent || (new Date() - @last_sent) > 500
-      @channel.trigger 'is-typing', {
-        user: current_user.toJSON(),
-        message: ($ '#chat_input').val()
-      }
-      @last_sent = new Date()
+    current = ($ '#chat_input').val()
+    return if current == @last_sent
+
+    @channel.trigger 'is-typing', {
+      user: current_user.toJSON(),
+      message: current
+    }
+    @last_sent = current
     
   send_message: ->
     data = {
@@ -52,6 +60,14 @@ ChatMessage = BaseView.extend
   template_element: $("#chat_message_template")
   tagName: 'li'
   
+  render: ->
+    @$el.html @template(@model)
+    @
+
+IsTypingMessage = BaseView.extend
+  template_element: $("#chat_is_typing_template")
+  tagName: 'li'
+
   render: ->
     @$el.html @template(@model)
     @

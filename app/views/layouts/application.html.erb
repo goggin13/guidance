@@ -52,6 +52,10 @@
     <span class='chat_message_name'>{{ user.name }}</span>: {{ message }}
   </script>  
   
+  <script type="text/template" id="chat_is_typing_template">
+    {{ user.name }} is typing...
+  </script>
+  
   <%= javascript_include_tag "application" %>
   
   <script type="text/javascript">
